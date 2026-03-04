@@ -16,10 +16,11 @@ class User(models.Model):
     updated_at = fields.DatetimeField(auto_now=True)
 
 
-class UserRequest(BaseModel):
+class UserCreateRequest(BaseModel):
     name: str
     email: str
     password: str
+
 
 
 class UserResponse(BaseModel):
@@ -29,3 +30,7 @@ class UserResponse(BaseModel):
 
     created_at: datetime
     updated_at: datetime
+
+class UserLoginRequest(BaseModel):
+    email: str
+    password: str
