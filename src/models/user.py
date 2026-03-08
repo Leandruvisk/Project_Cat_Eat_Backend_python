@@ -22,6 +22,9 @@ class UserCreateRequest(BaseModel):
     password: str
 
 
+class UserLoginRequest(BaseModel):
+    email: str
+    password: str
 
 class UserResponse(BaseModel):
     id: int
@@ -31,6 +34,8 @@ class UserResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-class UserLoginRequest(BaseModel):
-    email: str
+
+class UserHashResponse(BaseModel):
     password: str
+
+
