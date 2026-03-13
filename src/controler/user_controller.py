@@ -1,5 +1,6 @@
 from src.models.user import User, UserCreateRequest, UserResponse, UserLoginRequest, UserHashResponse
 import bcrypt
+import argon2
 
 class UserController:
     @staticmethod
@@ -26,9 +27,16 @@ class UserController:
         print(user.__dict__)
         password_bytes = user_request.password.encode("utf-8")
         stored_hash = user.password.encode("utf-8")
+        
+        ph = argon2.PasswordHasher()
 
-        if not bcrypt.checkpw(password_bytes, stored_hash):
+        try:
+            ph.verify(stored_hash, password_bytes)
+        except Exception:
             raise Exception("Senha incorreta")
+        
+        # if not bcrypt.checkpw(password_bytes, stored_hash):
+        #     raise Exception("Senha incorreta")
 
         return UserResponse(
             id=user.id,
