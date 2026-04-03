@@ -1,3 +1,4 @@
+import os
 from sanic import Sanic
 from sanic.response import text
 from tortoise.contrib.sanic import register_tortoise
@@ -6,9 +7,13 @@ from src.routes import routes
 app = Sanic(__name__)
 app.blueprint(routes)
 
+db_url = os.getenv("DB_URL")
+
+# print("🔥 DB_URL:", db_url)  # DEBUG
+
 register_tortoise(
     app,
-    db_url="postgres://comedor:123456@127.0.0.1:5432/comedor_gato",
+    db_url=db_url,
     modules={"models": ["src.models.user"]},
     generate_schemas=True,
 )

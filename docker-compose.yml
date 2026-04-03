@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  backend:
+    image: comedouro-backend:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: postgres://comedor:123456@db:5432/comedor_gato
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: comedor
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: comedor_gato
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U comedor -d comedor_gato"]
+      interval: 5s
+      retries: 5
